@@ -1,8 +1,13 @@
+/**
+ *  An Action Creator is a function that returns an action.
+ *  Returns an action which is automatically sent to all reducers.
+ *  @param book which is an object with a title
+ *  @returns {{type: string, payload: *}}
+ */
 export function selectBook(book) {
-  // selectBook is an ActionCreator, it needs to return an action,
-  // an object with a type property.
-  return {
-    type: 'BOOK_SELECTED',
-    payload: book
-  };
+    // selectBook is an ActionCreator, it needs to return an action, an object with a type property.
+    return {
+        type: 'BOOK_SELECTED',
+        payload: book
+    };
 }
