@@ -8,6 +8,8 @@ import { bindActionCreators } from 'redux';
  *  {    books: [ { title: ‘Harry Potter’ }, { title: ‘JavaScript” } ],	// Books Reducer
  *       activeBook: { title: ‘Javascript: The Good Parts” }		    // ActiveBook Reducer
  *  }
+ *
+ *  bindActionCreators is used to make sure action flows through all reducers.
  */
 class BookList extends Component {
 
@@ -16,50 +18,53 @@ class BookList extends Component {
      *  For each book in the array it creates a list item that contains the book's title.
      */
   renderList() {
-    return this.props.books.map((book) => {
-      return (
-        <li className="list-group-item"
-          key={book.title}
-            /*Call the Action Creator with the book that was clicked on. */
-          onClick={() => this.props.selectBook(book)}>
-          {book.title}
-        </li>
-      );
-    });
+      return this.props.books.map((book) => {
+          return (
+              <li
+                  className="list-group-item"
+                  key={book.title}
+                  /*Call the Action Creator with the book that was clicked on. */
+                  onClick={() => this.props.selectBook(book)}>
+                  {book.title}
+              </li>
+          );
+      });
   }
 
     /**
      * Render a list of books.
      * @returns {XML}
      */
-  render() {
-    return (
-      <ul className="list-group col-sm-4">
-        {this.renderList()}
-      </ul>
-    )
-  }
+    render() {
+        return (
+            <ul className="list-group col-sm-4">
+                {this.renderList()}
+            </ul>
+        )
+    }
 }
 
 /**
  *  Map application state. Returns an object will show up as this.props inside of BookList.
- * @param state
- * @returns {{books: *}}
+ *  @param state
+ *  @returns {{books: *}}
  */
 function mapStateToProps(state) {
-  return {
-    books: state.books // create a property called books whose value is an array of books.
-  };
+    return {
+        books: state.books // create a property called books whose value is an array of books.
+    };
 }
 
 /**
- * Anything returned from this function will end up as props on the BookList container
- * @param dispatch
- * @returns {{selectBook: selectBook}|B|N}
+ *  Wire up sending the Action to all the Reducers.
+ *  Whenever selectBook is called, the result should be passed to all of our reducers
+ *  Anything returned from this function will end up as props on the BookList container
+ *  @param dispatch
+ *  @returns {{selectBook: selectBook}|B|N}
  */
 function mapDispatchToProps(dispatch) {
-  // Whenever selectBook is called, the result should be passed to all of our reducers
-  return bindActionCreators({ selectBook: selectBook }, dispatch);
+    // Whenever selectBook is called, the result should be passed to all of our reducers
+    return bindActionCreators({ selectBook: selectBook }, dispatch);
 }
 
 /**
